@@ -1,0 +1,7 @@
+<p>cources-list works!</p>
+<div class="action">
+  <div class="action__add">
+    <button>+ Add new course</button>
+  </div>
+</div>
+<app-courses-list-item *ngFor="let course of coursesList" [course]="course"></app-courses-list-item>

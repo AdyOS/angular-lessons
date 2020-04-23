@@ -1,0 +1,24 @@
+@import "../../styles/global-vars";
+
+.header {
+  display: flex;
+  flex-direction: row;
+  height: @header-height;
+  background-color: @charcoal-grey;
+  align-items: center;
+  justify-content: space-between;
+
+  &__logo {
+    margin-left: 85px;
+    flex-grow: 1;
+
+  }
+
+  &__user {
+    margin-right: 25px;
+  }
+
+  &__log-off {
+    margin-right: 18px;
+  }
+}
