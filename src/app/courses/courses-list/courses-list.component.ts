@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ICourse} from '../../interfaces/cource';
+import {ICourse} from '../../core/interfaces/cource';
 
 @Component({
   selector: 'app-courses-list',
