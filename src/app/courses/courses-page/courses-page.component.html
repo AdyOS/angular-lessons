@@ -1,5 +1,5 @@
 <div>
-  <input type="text" />
-  <button>Search</button>
+  <input type="text" [value]="searchValue" (input)="searchValue = $event.target.value"/>
+  <button (click)="onSearchClick()">Search</button>
 </div>
 <app-courses-list></app-courses-list>

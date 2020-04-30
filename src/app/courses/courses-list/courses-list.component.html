@@ -4,4 +4,12 @@
     <button>+ Add new course</button>
   </div>
 </div>
-<app-courses-list-item *ngFor="let course of coursesList" [course]="course"></app-courses-list-item>
+<app-courses-list-item
+  *ngFor="let course of coursesList"
+  [course]="course"
+  (delete)="onDelete($event)"
+  (edit)="onEdit($event)"
+
+></app-courses-list-item>
+
+
