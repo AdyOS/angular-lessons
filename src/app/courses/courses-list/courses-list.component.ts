@@ -24,4 +24,12 @@ export class CoursesListComponent implements OnInit {
       });
     }
   }
+
+  onDelete(courseId: number) {
+    console.log('on delete event:', courseId);
+  }
+
+  onEdit(courseId: number) {
+    console.log('on edit event:', courseId);
+  }
 }
