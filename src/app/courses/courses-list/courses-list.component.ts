@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ICourse} from '../../core/interfaces/cource';
 
 @Component({
@@ -8,22 +8,13 @@ import {ICourse} from '../../core/interfaces/cource';
 })
 export class CoursesListComponent implements OnInit {
 
+  @Input()
   public coursesList: ICourse[] = [];
 
   constructor() {
   }
 
-  ngOnInit(): void {
-    for (let i = 0; i < 5; i++) {
-      this.coursesList.push({
-        id: i,
-        title: `This is course #${i}`,
-        create_date: `${i} Apr, 2020`,
-        duration: i,
-        description: 'Some description'
-      });
-    }
-  }
+  ngOnInit(): void {}
 
   onDelete(courseId: number) {
     console.log('on delete event:', courseId);

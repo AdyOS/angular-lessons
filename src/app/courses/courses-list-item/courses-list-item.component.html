@@ -1,7 +1,7 @@
-<div class="item">
-  <div>{{ course.title }}</div>
-  <div>{{ course.create_date }}</div>
-  <div>{{ course.duration }}</div>
+<div class="item" [appCourseBorder]="course.create_date">
+  <div [ngClass]="{'star': course.topRated}">{{ course.title | uppercase }}</div>
+  <div>{{ course.create_date | date:'mediumDate' }}</div>
+  <div>{{ course.duration | duration }}</div>
   <div>{{ course.description }}</div>
   <button (click)="onClickEdit(course.id)">Edit</button>
   <button (click)="onClickDelete(course.id)">Delete</button>
