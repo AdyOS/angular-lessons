@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ICourse} from '../../core/interfaces/cource';
-import { FilterCoursePipe} from '../../pipes/filter-course.pipe';
+import { FilterCoursePipe} from '../pipes/filter-course.pipe';
 
 @Component({
   selector: 'app-courses-page',
