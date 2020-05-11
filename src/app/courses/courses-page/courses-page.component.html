@@ -2,4 +2,4 @@
   <input type="text" [(ngModel)]="searchValue"/>
   <button (click)="onSearchClick()">Search</button>
 </div>
-<app-courses-list></app-courses-list>
+<app-courses-list [coursesList]="coursesList"></app-courses-list>

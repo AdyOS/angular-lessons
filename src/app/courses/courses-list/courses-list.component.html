@@ -5,7 +5,7 @@
   </div>
 </div>
 <app-courses-list-item
-  *ngFor="let course of coursesList"
+  *ngFor="let course of coursesList | orderBy"
   [course]="course"
   (delete)="onDelete($event)"
   (edit)="onEdit($event)"

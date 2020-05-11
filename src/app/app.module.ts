@@ -9,7 +9,7 @@ import { LogoComponent } from './shared/logo/logo.component';
 import { UserComponent } from './shared/user/user.component';
 import { LogOffComponent } from './shared/log-off/log-off.component';
 import { CoursesModule } from './courses/courses.module';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
