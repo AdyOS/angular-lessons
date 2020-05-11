@@ -1,6 +1,16 @@
-<header class="header">
-  <app-logo class="header__logo"></app-logo>
-  <app-user class="header__user" [user]="user"></app-user>
-  <app-log-off class="header__log-off"></app-log-off>
+<header class="">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <app-logo class="nav-link"></app-logo>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <app-user class="nav-item mr-sm-2" [user]="user"></app-user>
+        <app-log-off class=""></app-log-off>
+      </form>
+    </div>
+  </nav>
 </header>
 

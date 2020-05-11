@@ -1,9 +1,12 @@
-<div class="item" [appCourseBorder]="course.create_date">
-  <div [ngClass]="{'star': course.topRated}">{{ course.title | uppercase }}</div>
-  <div>{{ course.create_date | date:'mediumDate' }}</div>
-  <div>{{ course.duration | duration }}</div>
-  <div>{{ course.description }}</div>
-  <button (click)="onClickEdit(course.id)">Edit</button>
-  <button (click)="onClickDelete(course.id)">Delete</button>
-  <br>
+<div class="card mb-3" [appCourseBorder]="course.create_date">
+  <div class="card-header"><div [ngClass]="{'star': course.topRated}">{{ course.title | uppercase }}</div></div>
+  <div class="card-body">
+    <div class="card-title">
+      <div>{{ course.create_date | date:'mediumDate' }}</div>
+      <div>{{ course.duration | duration }}</div>
+    </div>
+    <div class="card-text">{{ course.description }}</div>
+    <button class="btn btn-primary mr-sm-2" (click)="onClickEdit(course.id)">Edit</button>
+    <button class="btn btn-primary" (click)="onClickDelete(course.id)">Delete</button>
+  </div>
 </div>
