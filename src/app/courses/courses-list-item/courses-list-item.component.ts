@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component,  EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ICourse} from '../../core/interfaces/cource';
 
 @Component({

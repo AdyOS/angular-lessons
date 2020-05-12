@@ -11,6 +11,9 @@ import { LogOffComponent } from './shared/log-off/log-off.component';
 import { CoursesModule } from './courses/courses.module';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AuthModule} from './auth/auth.module';
+import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+import {AuthPageComponent} from './auth/auth-page/auth-page.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +28,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     CoursesModule,
+    AuthModule,
     RouterModule.forRoot([
       {
-        path: '', component: CoursesModule
+        path: '', component: CoursesPageComponent
       },
+      {
+        path: 'login', component: AuthPageComponent
+      }
     ]),
     NgbModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    CoursesModule,
+    AuthModule,
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
