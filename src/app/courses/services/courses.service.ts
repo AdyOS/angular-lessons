@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ICourse} from '../interfaces/cource';
+import {ICourse} from '../../core/interfaces/course';
 
 @Injectable({
   providedIn: 'root'

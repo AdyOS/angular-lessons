@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ICourse} from '../../core/interfaces/cource';
-import {CoursesService} from '../../core/services/courses.service';
+import {ICourse} from '../../core/interfaces/course';
+import {CoursesService} from '../services/courses.service';
 import {DeleteModalComponent} from '../delete-modal/delete-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
