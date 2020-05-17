@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ICourse} from '../../core/interfaces/cource';
+import {ICourse} from '../../core/interfaces/course';
 import { FilterCoursePipe} from '../pipes/filter-course.pipe';
+import {CoursesService} from '../services/courses.service';
 
 @Component({
   selector: 'app-courses-page',
@@ -17,35 +18,12 @@ export class CoursesPageComponent implements OnInit {
 
   private storedCoursesList: ICourse[] = [];
 
-  constructor(private filterCoursePipe: FilterCoursePipe) { }
+  constructor(private filterCoursePipe: FilterCoursePipe, private coursesService: CoursesService) { }
 
   ngOnInit(): void {
     this.searchValue = '';
 
-    for (let i = 0; i < 5; i++) {
-      const now: Date = (new Date(Date.now()));
-
-      let date: Date;
-
-      if (i % 2) {
-        date = new Date(now.setDate( now.getDate() + i));
-      } else {
-        date = new Date(now.setDate( now.getDate() - 15));
-      }
-
-      if (i === 3) {
-        date = (new Date(Date.now()));
-      }
-
-      this.coursesList.push({
-        id: i,
-        title: `This is course #${i}`,
-        create_date: date,
-        duration: i * 60 + Math.floor(Math.random() * 50),
-        description: 'Some description',
-        topRated: !!(i % 2),
-      });
-    }
+    this.coursesList = this.coursesService.getList();
 
     this.storedCoursesList = this.coursesList.slice();
   }
