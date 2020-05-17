@@ -31,6 +31,7 @@ export class CoursesService {
         duration: i * 60 + Math.floor(Math.random() * 50),
         description: 'Some description',
         topRated: !!(i % 2),
+        authors: 'Abc Frp',
       });
     }
   }
@@ -40,10 +41,11 @@ export class CoursesService {
   }
 
   create(course: ICourse): void {
+    course.id = this.coursesList.length + 1;
     this.coursesList.push(course);
   }
 
-  getById(id: number): ICourse | void {
+  getById(id: number): ICourse {
     return this.coursesList.find((course: ICourse) => course.id === id);
   }
 

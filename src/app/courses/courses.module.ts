@@ -9,7 +9,7 @@ import { DurationPipe } from '../shared/pipes/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/order-by.pipe';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { NgbModalModule, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-
+import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { NgbModalModule, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     DurationPipe,
     OrderByPipe,
     DeleteModalComponent,
+    CourseEditPageComponent,
   ],
   imports: [
     CommonModule,

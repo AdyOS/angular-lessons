@@ -1,0 +1,43 @@
+<form name="course-edit-form">
+  <div class="course-edit-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Title</label>
+          <input [(ngModel)]="course.title" type="text" name="text" required class="form-control">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="course.description" type="text" name="description" required class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" [ngModel]="course.create_date" (ngModelChange)="course.create_date = $event" required class="form-control" [value]="course.create_date | date:'yyyy-MM-dd'">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Duration</label>
+          <input [(ngModel)]="course.duration" type="number" name="duration" required class="form-control">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Authors</label>
+          <input [(ngModel)]="course.authors" type="text" name="authors" required class="form-control">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <button class="btn btn-success pull-right mr-5" (click)="onClickCancel()">Cancel</button>
+          <button class="btn btn-success pull-right" (click)="onClickSave()">Save</button>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
