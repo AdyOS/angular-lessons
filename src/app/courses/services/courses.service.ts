@@ -49,12 +49,24 @@ export class CoursesService {
     return this.coursesList.find((course: ICourse) => course.id === id);
   }
 
-  update(id: number, course: ICourse): void {
-    this.delete(id);
+  update(course: ICourse): void {
+    this.delete(course.id);
     this.create(course);
   }
 
   delete(id: number): void {
     this.coursesList = this.coursesList.filter((course: ICourse) => course.id !== id);
+  }
+
+  getInitialState(): ICourse {
+    return {
+      id: -1,
+      title: '',
+      create_date: new Date(),
+      duration: 0,
+      description: '',
+      topRated: false,
+      authors: '',
+    };
   }
 }

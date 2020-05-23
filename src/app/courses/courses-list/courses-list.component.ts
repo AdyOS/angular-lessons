@@ -31,4 +31,8 @@ export class CoursesListComponent implements OnInit {
   onEdit(courseId: number) {
     this.router.navigate([`/courses/${courseId}`]);
   }
+
+  onClickAddNew() {
+    this.router.navigate([`/courses/new`]);
+  }
 }

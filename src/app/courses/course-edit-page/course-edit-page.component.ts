@@ -15,8 +15,6 @@ export class CourseEditPageComponent implements OnInit {
   @Input()
   public course: ICourse;
 
-  private add: boolean;
-
   constructor(
     private calendar: NgbCalendar,
     private coursesService: CoursesService,
@@ -24,36 +22,28 @@ export class CourseEditPageComponent implements OnInit {
     private router: Router,
     private breadcrumbsService: BreadcrumbsService) {
 
-    this.add = false;
   }
 
   ngOnInit(): void {
     const id: number = +this.activatedRoute.snapshot.paramMap.get('id');
 
-    if (id) {
+    this.loadCourse(id);
+  }
+
+  loadCourse(id: number): void {
+    if (id >= 0) {
       this.course = this.coursesService.getById(id);
       this.breadcrumbsService.setTitle(this.course.title);
-      console.log('date:', this.course.create_date);
     } else {
-      this.course = {
-        id: -1,
-        title: '',
-        create_date: (new Date(Date.now())),
-        duration: 0,
-        description: '',
-        topRated: false,
-        authors: '',
-      };
-
-      this.add = true;
+      this.course = this.coursesService.getInitialState();
     }
   }
 
   onClickSave() {
-    if (this.add) {
+    if (this.course.id < 0) {
       this.coursesService.create(this.course);
     } else {
-      this.coursesService.update(this.course.id, this.course);
+      this.coursesService.update(this.course);
     }
     this.router.navigate(['/']);
   }
@@ -61,4 +51,9 @@ export class CourseEditPageComponent implements OnInit {
   onClickCancel() {
     this.router.navigate(['/']);
   }
+
+  onDateChange(event) {
+    this.course.create_date = new Date(event);
+  }
+
 }

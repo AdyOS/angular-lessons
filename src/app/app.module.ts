@@ -9,7 +9,7 @@ import {LogoComponent} from './shared/logo/logo.component';
 import {UserComponent} from './shared/user/user.component';
 import {LogOffComponent} from './shared/log-off/log-off.component';
 import {CoursesModule} from './courses/courses.module';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AuthModule} from './auth/auth.module';
 import {AuthPageComponent} from './auth/auth-page/auth-page.component';
@@ -17,6 +17,37 @@ import {PageNotFoundComponent} from './shared/page-not-found/page-not-found.comp
 import {CourseEditPageComponent} from './courses/course-edit-page/course-edit-page.component';
 import {AuthGuard} from './core/auth-guard.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+
+const routes: Routes = [
+  {
+    path: '', redirectTo: 'courses', pathMatch: 'full',
+  },
+  {
+    path: 'courses',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '', component: CoursesPageComponent,
+      },
+      {
+        path: ':id', component: CourseEditPageComponent,
+        data: {
+          courseId: ':id',
+          test: 'test'
+        }
+      },
+      {
+        path: 'new', component: CourseEditPageComponent
+      }
+    ]
+  },
+  {
+    path: 'login', component: AuthPageComponent
+  },
+  {
+    path: '**', component: PageNotFoundComponent
+  },
+];
 
 @NgModule({
   declarations: [
@@ -33,36 +64,7 @@ import {CoursesPageComponent} from './courses/courses-page/courses-page.componen
     BrowserModule,
     CoursesModule,
     AuthModule,
-    RouterModule.forRoot([
-      {
-        path: '', redirectTo: 'courses', pathMatch: 'full',
-      },
-      {
-        path: 'courses',
-        canActivate: [AuthGuard],
-        children: [
-          {
-            path: '', component: CoursesPageComponent,
-          },
-          {
-            path: ':id', component: CourseEditPageComponent,
-            data: {
-              courseId: ':id',
-              test: 'test'
-            }
-          },
-          {
-            path: 'new', component: CourseEditPageComponent
-          }
-        ]
-      },
-      {
-        path: 'login', component: AuthPageComponent
-      },
-      {
-        path: '**', component: PageNotFoundComponent
-      },
-    ]),
+    RouterModule.forRoot(routes),
     NgbModule
   ],
   providers: [
