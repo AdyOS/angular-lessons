@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BreadcrumbsService} from './services/breadcrumbs.service';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./breadcrumbs.component.less']
 })
 export class BreadcrumbsComponent implements OnInit {
-
-  constructor() { }
+  constructor(
+    public breadcrumbsService: BreadcrumbsService) {
+  }
 
   ngOnInit(): void {
+
   }
 
 }

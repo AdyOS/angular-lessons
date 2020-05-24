@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ICourse} from '../../core/interfaces/course';
 import { FilterCoursePipe} from '../pipes/filter-course.pipe';
 import {CoursesService} from '../services/courses.service';
+import {ActivatedRoute} from '@angular/router';
+import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-courses-page',
@@ -18,18 +20,21 @@ export class CoursesPageComponent implements OnInit {
 
   private storedCoursesList: ICourse[] = [];
 
-  constructor(private filterCoursePipe: FilterCoursePipe, private coursesService: CoursesService) { }
+  constructor(
+    private filterCoursePipe: FilterCoursePipe,
+    private coursesService: CoursesService,
+    private router: ActivatedRoute,
+    private breadcrumbsService: BreadcrumbsService) { }
 
   ngOnInit(): void {
     this.searchValue = '';
 
     this.coursesList = this.coursesService.getList();
-
     this.storedCoursesList = this.coursesList.slice();
+    this.breadcrumbsService.setTitle('');
   }
 
   onSearchClick(): void {
-    console.log('search value:', this.searchValue);
     this.coursesList = this.filterCoursePipe.transform(this.searchValue, this.storedCoursesList.slice());
   }
 }

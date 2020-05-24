@@ -6,10 +6,10 @@
           <app-logo class="nav-link"></app-logo>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <div class="form-inline my-2 my-lg-0">
         <app-user *ngIf="authService.isAuthenticated()" class="nav-item mr-sm-2" [user]="user"></app-user>
         <app-log-off class=""></app-log-off>
-      </form>
+      </div>
     </div>
   </nav>
 </header>

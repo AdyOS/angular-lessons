@@ -31,6 +31,7 @@ export class CoursesService {
         duration: i * 60 + Math.floor(Math.random() * 50),
         description: 'Some description',
         topRated: !!(i % 2),
+        authors: 'Abc Frp',
       });
     }
   }
@@ -40,19 +41,32 @@ export class CoursesService {
   }
 
   create(course: ICourse): void {
+    course.id = this.coursesList.length + 1;
     this.coursesList.push(course);
   }
 
-  getById(id: number): ICourse | void {
+  getById(id: number): ICourse {
     return this.coursesList.find((course: ICourse) => course.id === id);
   }
 
-  update(id: number, course: ICourse): void {
-    this.delete(id);
+  update(course: ICourse): void {
+    this.delete(course.id);
     this.create(course);
   }
 
   delete(id: number): void {
     this.coursesList = this.coursesList.filter((course: ICourse) => course.id !== id);
+  }
+
+  getInitialState(): ICourse {
+    return {
+      id: -1,
+      title: '',
+      create_date: new Date(),
+      duration: 0,
+      description: '',
+      topRated: false,
+      authors: '',
+    };
   }
 }
