@@ -17,6 +17,8 @@ import {PageNotFoundComponent} from './shared/page-not-found/page-not-found.comp
 import {CourseEditPageComponent} from './courses/course-edit-page/course-edit-page.component';
 import {AuthGuard} from './core/auth-guard.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './core/interceptors/auth-interceptor';
 
 const routes: Routes = [
   {
@@ -62,6 +64,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CoursesModule,
     AuthModule,
     RouterModule.forRoot(routes),
@@ -70,6 +73,11 @@ const routes: Routes = [
   providers: [
     CoursesModule,
     AuthModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

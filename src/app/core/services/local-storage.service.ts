@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class LocalStorageService {
+  public TOKEN_KEY = 'TOKEN_KEY';
+  public USER_KEY = 'USER_KEY';
 
   constructor() { }
 

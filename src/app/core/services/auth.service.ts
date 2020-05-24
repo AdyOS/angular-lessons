@@ -1,42 +1,37 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {IUser} from '../interfaces/user';
 import { LocalStorageService } from '../../core/services/local-storage.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private USER_KEY: string;
-  private fakeUser: IUser;
+  public API_URL = 'http://localhost:3000/users';
 
-  constructor(private localStorageService: LocalStorageService ) {
-    this.USER_KEY = 'USER_KEY';
-    this.fakeUser = {
-      id: 1,
-      first_name: 'Andrei',
-      last_name: 'Osipov',
-      login: 'test_login',
-      password: 'test-pass',
-    };
+  constructor(private localStorageService: LocalStorageService, private httpClient: HttpClient) {
+
   }
 
-  login(user: IUser): void {
+  login(user: IUser): Observable<IUser[]> {
     console.log('login action with creds: ', user.login, user.password);
-    this.localStorageService.setItem(this.USER_KEY, this.fakeUser);
+    return this.httpClient.get<IUser[]>(`${this.API_URL}/?login=${user.login}&password=${user.password}`);
   }
 
   logout(): void {
     console.log('logout');
-    this.localStorageService.removeItem(this.USER_KEY);
+    this.localStorageService.removeItem(this.localStorageService.USER_KEY);
+    this.localStorageService.removeItem(this.localStorageService.TOKEN_KEY);
   }
 
   isAuthenticated(): boolean {
-    return !!this.localStorageService.getItem(this.USER_KEY);
+    return !!this.localStorageService.getItem(this.localStorageService.USER_KEY);
   }
 
   getUserInfo(): IUser {
-    return this.localStorageService.getItem(this.USER_KEY);
+    return this.localStorageService.getItem(this.localStorageService.USER_KEY);
 
   }
 }

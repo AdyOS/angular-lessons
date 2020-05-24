@@ -4,6 +4,7 @@ import { FilterCoursePipe} from '../pipes/filter-course.pipe';
 import {CoursesService} from '../services/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-courses-page',
@@ -20,6 +21,8 @@ export class CoursesPageComponent implements OnInit {
 
   private storedCoursesList: ICourse[] = [];
 
+  private pageId = 1;
+
   constructor(
     private filterCoursePipe: FilterCoursePipe,
     private coursesService: CoursesService,
@@ -28,13 +31,30 @@ export class CoursesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchValue = '';
+    this.loadCourses();
+  }
 
-    this.coursesList = this.coursesService.getList();
-    this.storedCoursesList = this.coursesList.slice();
-    this.breadcrumbsService.setTitle('');
+  loadCourses() {
+    this.coursesService
+      .getList(this.pageId)
+      .subscribe(courses => {
+        this.coursesList = [...this.coursesList, ...courses];
+        this.storedCoursesList = this.coursesList.slice();
+        this.breadcrumbsService.setTitle('');
+      });
   }
 
   onSearchClick(): void {
-    this.coursesList = this.filterCoursePipe.transform(this.searchValue, this.storedCoursesList.slice());
+    this.filterCoursePipe
+      .transform(this.searchValue)
+      .subscribe(courses => {
+        console.log(this.searchValue, courses);
+        this.coursesList = courses;
+      });
+  }
+
+  onClickLoadMore(): void {
+    this.pageId++;
+    this.loadCourses();
   }
 }

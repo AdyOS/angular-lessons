@@ -32,8 +32,12 @@ export class CourseEditPageComponent implements OnInit {
 
   loadCourse(id: number): void {
     if (id >= 0) {
-      this.course = this.coursesService.getById(id);
-      this.breadcrumbsService.setTitle(this.course.title);
+      this.coursesService
+        .getById(id)
+        .subscribe(course => {
+          this.course = course;
+          this.breadcrumbsService.setTitle(this.course.title);
+        });
     } else {
       this.course = this.coursesService.getInitialState();
     }
@@ -41,11 +45,13 @@ export class CourseEditPageComponent implements OnInit {
 
   onClickSave() {
     if (this.course.id < 0) {
-      this.coursesService.create(this.course);
+      this.coursesService.create(this.course)
+        .subscribe(response => this.router.navigate(['/']));
     } else {
-      this.coursesService.update(this.course);
+      this.coursesService.update(this.course)
+        .subscribe(response => this.router.navigate(['/']));
     }
-    this.router.navigate(['/']);
+
   }
 
   onClickCancel() {
