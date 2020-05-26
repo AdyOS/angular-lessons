@@ -24,13 +24,20 @@ export class CoursesListComponent implements OnInit {
   onDelete(courseId: number) {
     const modalRef = this.modalService.open(DeleteModalComponent, {ariaLabelledBy: 'deleteModal'});
     modalRef.result.then(async () => {
-      this.coursesService.delete(courseId)
+      const deleteSubs = this.coursesService.delete(courseId)
         .subscribe(() => {
-          this.coursesService
+          deleteSubs.unsubscribe();
+          const listSubs = this.coursesService
             .getList()
             .subscribe(
-              courses => this.coursesList = courses,
-              (error: HttpErrorResponse) => console.log('fooof', error)
+              courses =>  {
+                this.coursesList = courses;
+                listSubs.unsubscribe();
+              },
+              (error: HttpErrorResponse) =>  {
+                console.log('fooof', error);
+                listSubs.unsubscribe();
+              }
             );
         });
     }, () => {});

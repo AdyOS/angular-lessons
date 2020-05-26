@@ -22,12 +22,13 @@ export class AuthPageComponent implements OnInit {
   }
 
   onLoginClick() {
-    this.authService.login(this.user)
+    const subscription = this.authService.login(this.user)
       .subscribe(user => {
         if (user.length) {
           this.localStorageService.setItem(this.localStorageService.USER_KEY, user);
           this.localStorageService.setItem(this.localStorageService.TOKEN_KEY, { token: '1qweqwc11' });
           this.router.navigate(['/']);
+          subscription.unsubscribe();
         }
       });
 

@@ -4,7 +4,6 @@ import { FilterCoursePipe} from '../pipes/filter-course.pipe';
 import {CoursesService} from '../services/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-courses-page',
@@ -18,8 +17,6 @@ export class CoursesPageComponent implements OnInit {
   public searchValue: string;
 
   public coursesList: ICourse[] = [];
-
-  private storedCoursesList: ICourse[] = [];
 
   private pageId = 1;
 
@@ -35,21 +32,22 @@ export class CoursesPageComponent implements OnInit {
   }
 
   loadCourses() {
-    this.coursesService
+    const subscription = this.coursesService
       .getList(this.pageId)
       .subscribe(courses => {
         this.coursesList = [...this.coursesList, ...courses];
-        this.storedCoursesList = this.coursesList.slice();
         this.breadcrumbsService.setTitle('');
+        subscription.unsubscribe();
       });
   }
 
   onSearchClick(): void {
-    this.filterCoursePipe
+    const subscription = this.filterCoursePipe
       .transform(this.searchValue)
       .subscribe(courses => {
         console.log(this.searchValue, courses);
         this.coursesList = courses;
+        subscription.unsubscribe();
       });
   }
 
