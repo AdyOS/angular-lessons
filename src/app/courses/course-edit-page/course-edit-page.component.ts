@@ -4,6 +4,8 @@ import { NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import {CoursesService} from '../services/courses.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
+import {UnsubscribeComponent} from '../../shared/unsubscribe/unsubscribe.component';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -11,7 +13,7 @@ import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.
   styleUrls: ['./course-edit-page.component.less'],
 
 })
-export class CourseEditPageComponent implements OnInit {
+export class CourseEditPageComponent extends UnsubscribeComponent implements OnInit {
   @Input()
   public course: ICourse;
 
@@ -21,7 +23,7 @@ export class CourseEditPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private breadcrumbsService: BreadcrumbsService) {
-
+    super();
   }
 
   ngOnInit(): void {
@@ -32,12 +34,12 @@ export class CourseEditPageComponent implements OnInit {
 
   loadCourse(id: number): void {
     if (id >= 0) {
-      const subscription = this.coursesService
+      this.coursesService
         .getById(id)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(course => {
           this.course = course;
           this.breadcrumbsService.setTitle(this.course.title);
-          subscription.unsubscribe();
         });
     } else {
       this.course = this.coursesService.getInitialState();
@@ -46,16 +48,16 @@ export class CourseEditPageComponent implements OnInit {
 
   onClickSave() {
     if (this.course.id < 0) {
-      const createSubs = this.coursesService.create(this.course)
+      this.coursesService.create(this.course)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(response => {
           this.router.navigate(['/']);
-          createSubs.unsubscribe();
         });
     } else {
-      const updateSubs = this.coursesService.update(this.course)
+      this.coursesService.update(this.course)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(response => {
           this.router.navigate(['/']);
-          updateSubs.unsubscribe();
         });
     }
 
