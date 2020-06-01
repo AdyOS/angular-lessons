@@ -4,6 +4,7 @@ import {CoursesService} from '../services/courses.service';
 import {DeleteModalComponent} from '../delete-modal/delete-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-courses-list',
@@ -22,9 +23,23 @@ export class CoursesListComponent implements OnInit {
 
   onDelete(courseId: number) {
     const modalRef = this.modalService.open(DeleteModalComponent, {ariaLabelledBy: 'deleteModal'});
-    modalRef.result.then(() => {
-      this.coursesService.delete(courseId);
-      this.coursesList = this.coursesService.getList();
+    modalRef.result.then(async () => {
+      const deleteSubs = this.coursesService.delete(courseId)
+        .subscribe(() => {
+          deleteSubs.unsubscribe();
+          const listSubs = this.coursesService
+            .getList()
+            .subscribe(
+              courses =>  {
+                this.coursesList = courses;
+                listSubs.unsubscribe();
+              },
+              (error: HttpErrorResponse) =>  {
+                console.log('fooof', error);
+                listSubs.unsubscribe();
+              }
+            );
+        });
     }, () => {});
   }
 

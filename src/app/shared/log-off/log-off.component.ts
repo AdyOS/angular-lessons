@@ -21,5 +21,6 @@ export class LogOffComponent implements OnInit {
 
   onClickLogout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

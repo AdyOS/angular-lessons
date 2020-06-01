@@ -18,7 +18,7 @@ export class CoursesPageComponent implements OnInit {
 
   public coursesList: ICourse[] = [];
 
-  private storedCoursesList: ICourse[] = [];
+  private pageId = 1;
 
   constructor(
     private filterCoursePipe: FilterCoursePipe,
@@ -28,13 +28,31 @@ export class CoursesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchValue = '';
+    this.loadCourses();
+  }
 
-    this.coursesList = this.coursesService.getList();
-    this.storedCoursesList = this.coursesList.slice();
-    this.breadcrumbsService.setTitle('');
+  loadCourses() {
+    const subscription = this.coursesService
+      .getList(this.pageId)
+      .subscribe(courses => {
+        this.coursesList = [...this.coursesList, ...courses];
+        this.breadcrumbsService.setTitle('');
+        subscription.unsubscribe();
+      });
   }
 
   onSearchClick(): void {
-    this.coursesList = this.filterCoursePipe.transform(this.searchValue, this.storedCoursesList.slice());
+    const subscription = this.filterCoursePipe
+      .transform(this.searchValue)
+      .subscribe(courses => {
+        console.log(this.searchValue, courses);
+        this.coursesList = courses;
+        subscription.unsubscribe();
+      });
+  }
+
+  onClickLoadMore(): void {
+    this.pageId++;
+    this.loadCourses();
   }
 }

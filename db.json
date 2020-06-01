@@ -1,0 +1,130 @@
+{
+  "courses": [
+    {
+      "id": 0,
+      "title": "This is course #0 jkjkj",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 35,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 1,
+      "title": "This is course #1",
+      "create_date": "2020-05-24T14:12:45.269Z",
+      "duration": 93,
+      "description": "Some description",
+      "topRated": true,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 2,
+      "title": "This is course #2",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 169,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 3,
+      "title": "This is course #3",
+      "create_date": "2020-05-23T14:12:45.269Z",
+      "duration": 192,
+      "description": "Some description",
+      "topRated": true,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 4,
+      "title": "This is course #4",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 262,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "title": "выаываыа ололо ",
+      "create_date": "2020-05-24T12:02:46.323Z",
+      "duration": 10,
+      "description": "фывфывфывфвы",
+      "topRated": false,
+      "authors": "выфаыфваыфва",
+      "id": 5
+    },
+    {
+      "id": 6,
+      "title": "This is course #0",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 35,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 7,
+      "title": "This is course #1",
+      "create_date": "2020-05-24T14:12:45.269Z",
+      "duration": 93,
+      "description": "Some description",
+      "topRated": true,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 8,
+      "title": "This is course #2",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 169,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 9,
+      "title": "This is course #3",
+      "create_date": "2020-05-23T14:12:45.269Z",
+      "duration": 192,
+      "description": "Some description",
+      "topRated": true,
+      "authors": "Abc Frp"
+    },
+    {
+      "id": 10,
+      "title": "This is course #4",
+      "create_date": "2020-05-08T14:12:45.269Z",
+      "duration": 262,
+      "description": "Some description",
+      "topRated": false,
+      "authors": "Abc Frp"
+    },
+    {
+      "title": "выаываыа ололо ",
+      "create_date": "2020-05-24T12:02:46.323Z",
+      "duration": 10,
+      "description": "фывфывфывфвы",
+      "topRated": false,
+      "authors": "выфаыфваыфва",
+      "id": 11
+    },
+    {
+      "title": "sadfsadfs vvvvvvv",
+      "create_date": "2020-05-24T12:13:33.714Z",
+      "duration": 10,
+      "description": "vvvvvv",
+      "topRated": false,
+      "authors": "sdfasdfsadf",
+      "id": 12
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "last_name": "Osipov",
+      "first_name": "Andrey",
+      "login": "test",
+      "password": "test"
+    }
+  ]
+}

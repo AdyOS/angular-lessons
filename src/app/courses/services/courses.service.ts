@@ -1,5 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ICourse} from '../../core/interfaces/course';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -7,55 +10,47 @@ import {ICourse} from '../../core/interfaces/course';
 export class CoursesService {
 
   public coursesList: ICourse[] = [];
+  public API_URL = 'http://localhost:3000/courses';
 
-  constructor() {
-    for (let i = 0; i < 5; i++) {
-      const now: Date = (new Date(Date.now()));
+  constructor(private httpClient: HttpClient) {
 
-      let date: Date;
-
-      if (i % 2) {
-        date = new Date(now.setDate( now.getDate() + i));
-      } else {
-        date = new Date(now.setDate( now.getDate() - 15));
-      }
-
-      if (i === 3) {
-        date = (new Date(Date.now()));
-      }
-
-      this.coursesList.push({
-        id: i,
-        title: `This is course #${i}`,
-        create_date: date,
-        duration: i * 60 + Math.floor(Math.random() * 50),
-        description: 'Some description',
-        topRated: !!(i % 2),
-        authors: 'Abc Frp',
-      });
-    }
   }
 
-  getList(): ICourse[] {
-    return this.coursesList;
+  formatDate(courses: ICourse[]): ICourse[] {
+    return courses.map(course => {
+      course.create_date = new Date(course.create_date);
+
+      return course;
+    });
   }
 
-  create(course: ICourse): void {
-    course.id = this.coursesList.length + 1;
-    this.coursesList.push(course);
+  getList(pageId: number = 1): Observable<ICourse[]> {
+    return this.httpClient
+      .get<ICourse[]>(`${this.API_URL}/?_page=${pageId}`)
+      .pipe(map(courses => this.formatDate(courses)));
   }
 
-  getById(id: number): ICourse {
-    return this.coursesList.find((course: ICourse) => course.id === id);
+  create(course: ICourse): Observable<any> {
+    delete course.id;
+
+    return this.httpClient.post(this.API_URL, course);
   }
 
-  update(course: ICourse): void {
-    this.delete(course.id);
-    this.create(course);
+  getById(id: number): Observable<ICourse> {
+    return this.httpClient.get<ICourse>(`${this.API_URL}/${id}`);
   }
 
-  delete(id: number): void {
-    this.coursesList = this.coursesList.filter((course: ICourse) => course.id !== id);
+  update(course: ICourse): Observable<any> {
+    return this.httpClient.put(`${this.API_URL}/${course.id}`, course);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.API_URL}/${id}`);
+  }
+
+  findByText(searchString): Observable<ICourse[]> {
+    return this.httpClient.get<ICourse[]>(`${this.API_URL}/?q=${searchString}`)
+      .pipe(map(courses => this.formatDate(courses)));
   }
 
   getInitialState(): ICourse {
