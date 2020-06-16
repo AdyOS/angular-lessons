@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesListItemComponent } from './courses-list-item/courses-list-item.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
@@ -10,6 +10,7 @@ import { OrderByPipe } from '../shared/pipes/order-by.pipe';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { NgbModalModule, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
+import { DateInputComponent} from '../shared/date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,12 @@ import { CourseEditPageComponent } from './course-edit-page/course-edit-page.com
     OrderByPipe,
     DeleteModalComponent,
     CourseEditPageComponent,
+    DateInputComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModalModule,
   ],
   exports: [

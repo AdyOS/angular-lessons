@@ -1,11 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ICourse} from '../../core/interfaces/course';
-import { NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import {CoursesService} from '../services/courses.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
 import {UnsubscribeComponent} from '../../shared/unsubscribe/unsubscribe.component';
 import {takeUntil} from 'rxjs/operators';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { dateValueValidator} from '../../core/validators/date-validator';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -17,6 +20,10 @@ export class CourseEditPageComponent extends UnsubscribeComponent implements OnI
   @Input()
   public course: ICourse;
 
+  form: FormGroup;
+
+  private dateFormat = 'DD/MM/YYYY';
+
   constructor(
     private calendar: NgbCalendar,
     private coursesService: CoursesService,
@@ -24,6 +31,15 @@ export class CourseEditPageComponent extends UnsubscribeComponent implements OnI
     private router: Router,
     private breadcrumbsService: BreadcrumbsService) {
     super();
+
+    this.form = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.compose([Validators.required, dateValueValidator(this.dateFormat)])),
+      duration: new FormControl('', Validators.required),
+      authors: new FormControl('', Validators.required),
+
+    });
   }
 
   ngOnInit(): void {
@@ -39,7 +55,9 @@ export class CourseEditPageComponent extends UnsubscribeComponent implements OnI
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(course => {
           this.course = course;
+          this.course.create_date = moment(this.course.create_date).format(this.dateFormat);
           this.breadcrumbsService.setTitle(this.course.title);
+          this.setFormData();
         });
     } else {
       this.course = this.coursesService.getInitialState();
@@ -67,8 +85,26 @@ export class CourseEditPageComponent extends UnsubscribeComponent implements OnI
     this.router.navigate(['/']);
   }
 
-  onDateChange(event) {
-    this.course.create_date = new Date(event);
+  onSubmit() {
   }
 
+  onDateChange(event) {
+    //this.course.create_date = new Date(event);
+  }
+
+  getCourseValue(propValue) {
+    return this.course ? this.course[propValue] : '';
+  }
+
+  setFormData() {
+    //const date = moment(this.course.create_date).format(this.dateFormat);
+    console.log('this.course', this.course);
+    this.form.patchValue({
+      title: this.course.title,
+      description: this.course.description,
+      date: this.course.create_date,
+      duration: this.course.duration,
+      authors: this.course.authors,
+    });
+  }
 }
