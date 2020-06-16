@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IUser} from '../interfaces/user';
 import { LocalStorageService } from '../../core/services/local-storage.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,8 @@ import {Observable} from 'rxjs';
 export class AuthService {
 
   public API_URL = 'http://localhost:3000/users';
+  public user: BehaviorSubject<IUser> = new BehaviorSubject<any>({});
+  public isAuthenticated = new BehaviorSubject<boolean>(false);
 
   constructor(private localStorageService: LocalStorageService, private httpClient: HttpClient) {
 
@@ -24,14 +26,15 @@ export class AuthService {
     console.log('logout');
     this.localStorageService.removeItem(this.localStorageService.USER_KEY);
     this.localStorageService.removeItem(this.localStorageService.TOKEN_KEY);
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.localStorageService.getItem(this.localStorageService.USER_KEY);
+    this.isAuthenticated.next(false);
   }
 
   getUserInfo(): IUser {
     return this.localStorageService.getItem(this.localStorageService.USER_KEY);
+  }
 
+  setUserData(user: IUser) {
+    this.user.next(user);
+    this.isAuthenticated.next(true);
   }
 }

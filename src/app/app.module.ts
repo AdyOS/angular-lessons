@@ -19,6 +19,11 @@ import {AuthGuard} from './core/auth-guard.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './core/interceptors/auth-interceptor';
+import {LoaderInterceptor} from './core/interceptors/loader.interceptor';
+import {LoaderComponent} from './shared/loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {LoaderService} from './core/services/loader.service';
+
 
 const routes: Routes = [
   {
@@ -61,6 +66,7 @@ const routes: Routes = [
     UserComponent,
     LogOffComponent,
     PageNotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +74,8 @@ const routes: Routes = [
     CoursesModule,
     AuthModule,
     RouterModule.forRoot(routes),
-    NgbModule
+    NgbModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     CoursesModule,
@@ -76,6 +83,12 @@ const routes: Routes = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    LoaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ],

@@ -1,9 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { debounceTime, map, takeUntil, filter, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, fromEvent } from 'rxjs';
 import {ICourse} from '../../core/interfaces/course';
 import { FilterCoursePipe} from '../pipes/filter-course.pipe';
 import {CoursesService} from '../services/courses.service';
 import {ActivatedRoute} from '@angular/router';
 import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.service';
+import {UnsubscribeComponent} from '../../shared/unsubscribe/unsubscribe.component';
 
 @Component({
   selector: 'app-courses-page',
@@ -11,7 +14,7 @@ import {BreadcrumbsService} from '../../shared/breadcrumbs/services/breadcrumbs.
   styleUrls: ['./courses-page.component.less'],
   providers: [FilterCoursePipe],
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent extends UnsubscribeComponent implements OnInit {
 
   @Input()
   public searchValue: string;
@@ -24,35 +27,50 @@ export class CoursesPageComponent implements OnInit {
     private filterCoursePipe: FilterCoursePipe,
     private coursesService: CoursesService,
     private router: ActivatedRoute,
-    private breadcrumbsService: BreadcrumbsService) { }
+    private breadcrumbsService: BreadcrumbsService) {
+
+    super();
+  }
 
   ngOnInit(): void {
     this.searchValue = '';
     this.loadCourses();
+    this.searchSubscribtion();
   }
 
   loadCourses() {
-    const subscription = this.coursesService
+    this.coursesService
       .getList(this.pageId)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(courses => {
         this.coursesList = [...this.coursesList, ...courses];
         this.breadcrumbsService.setTitle('');
-        subscription.unsubscribe();
       });
   }
 
-  onSearchClick(): void {
-    const subscription = this.filterCoursePipe
-      .transform(this.searchValue)
-      .subscribe(courses => {
-        console.log(this.searchValue, courses);
-        this.coursesList = courses;
-        subscription.unsubscribe();
-      });
+  searchCourses(searchString: string): Observable<ICourse[]> {
+    return this.filterCoursePipe.transform(searchString);
   }
 
   onClickLoadMore(): void {
     this.pageId++;
     this.loadCourses();
+  }
+
+  searchSubscribtion() {
+    const input = document.getElementById('input-search') as HTMLInputElement;
+    fromEvent(input, 'keyup').pipe(
+      takeUntil(this.ngUnsubscribe),
+      map(() => input.value),
+      // filter(text => !!text),
+      distinctUntilChanged(),
+      debounceTime(250),
+      switchMap(this.searchCourses.bind(this)),
+    ).subscribe(
+      (courses) => {
+        this.coursesList = courses;
+      },
+      err => console.error(err)
+    );
   }
 }
