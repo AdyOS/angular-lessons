@@ -1,4 +1,4 @@
-<form name="course-edit-form">
+<form #f [formGroup]="form" (ngSubmit)="onSubmit()" name="course-edit-form">
   <div class="course-edit-container">
     <div class="row">
       <div class="col-md-12">
@@ -6,11 +6,8 @@
           <label>Title</label>
           <input
             type="text"
-            name="title"
+            formControlName="title"
             class="form-control"
-            required
-            [(ngModel)]="course.title"
-            [ngModelOptions]="{standalone: true}"
           >
         </div>
       </div>
@@ -19,38 +16,22 @@
           <label>Description</label>
           <textarea
             type="text"
-            name="description"
+            formControlName="description"
             class="form-control"
-            required
-            [(ngModel)]="course.description"
-            [ngModelOptions]="{standalone: true}"
           >
             </textarea>
         </div>
       </div>
       <div class="col-md-12">
-        <div class="form-group">
-          <label>Date</label>
-          <input
-            class="form-control"
-            type="date"
-            name="create_date"
-            required
-            [ngModel]="course.create_date | date:'yyyy-MM-dd'"
-            (ngModelChange)="onDateChange($event)"
-          >
-        </div>
+        <app-date-input formControlName="date" format="DD/MM/YYYY"></app-date-input>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label>Duration</label>
           <input
             type="number"
-            name="duration"
+            formControlName="duration"
             class="form-control"
-            required
-            [(ngModel)]="course.duration"
-            [ngModelOptions]="{standalone: true}"
             >
         </div>
       </div>
@@ -59,18 +40,15 @@
           <label>Authors</label>
           <input
             type="text"
-            name="authors"
+            formControlName="authors"
             class="form-control"
-            required
-            [(ngModel)]="course.authors"
-            [ngModelOptions]="{standalone: true}"
           >
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <button class="btn btn-success pull-right mr-5" (click)="onClickCancel()">Cancel</button>
-          <button class="btn btn-success pull-right" (click)="onClickSave()">Save</button>
+          <button type="submit" class="btn btn-success pull-right" [disabled]="form.invalid" (click)="onClickSave()">Save</button>
           <div class="clearfix"></div>
         </div>
       </div>

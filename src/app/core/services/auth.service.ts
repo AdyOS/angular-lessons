@@ -9,7 +9,7 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 })
 export class AuthService {
 
-  public API_URL = 'http://localhost:3000/users';
+  public API_URL = 'http://localhost:3001/users';
   public user: BehaviorSubject<IUser> = new BehaviorSubject<any>({});
   public isAuthenticated = new BehaviorSubject<boolean>(false);
 

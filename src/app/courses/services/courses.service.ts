@@ -3,6 +3,7 @@ import {ICourse} from '../../core/interfaces/course';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import {map} from 'rxjs/operators';
 export class CoursesService {
 
   public coursesList: ICourse[] = [];
-  public API_URL = 'http://localhost:3000/courses';
+  public API_URL = 'http://localhost:3001/courses';
 
   constructor(private httpClient: HttpClient) {
 
@@ -18,7 +19,7 @@ export class CoursesService {
 
   formatDate(courses: ICourse[]): ICourse[] {
     return courses.map(course => {
-      course.create_date = new Date(course.create_date);
+      course.create_date = moment(course.create_date).format('DD/MM/YYYY');//new Date(course.create_date);
 
       return course;
     });
@@ -57,7 +58,7 @@ export class CoursesService {
     return {
       id: -1,
       title: '',
-      create_date: new Date(),
+      create_date: '',
       duration: 0,
       description: '',
       topRated: false,

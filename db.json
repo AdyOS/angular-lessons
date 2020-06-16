@@ -3,7 +3,7 @@
     {
       "id": 0,
       "title": "This is course #0 jkjkj",
-      "create_date": "2020-05-08T14:12:45.269Z",
+      "create_date": "08/05/2020",
       "duration": 35,
       "description": "Some description",
       "topRated": false,
@@ -12,7 +12,7 @@
     {
       "id": 1,
       "title": "This is course #1",
-      "create_date": "2020-05-24T14:12:45.269Z",
+      "create_date": "24/05/2020",
       "duration": 93,
       "description": "Some description",
       "topRated": true,
@@ -21,7 +21,7 @@
     {
       "id": 2,
       "title": "This is course #2",
-      "create_date": "2020-05-08T14:12:45.269Z",
+      "create_date": "08/05/2020",
       "duration": 169,
       "description": "Some description",
       "topRated": false,
