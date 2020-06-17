@@ -2,7 +2,7 @@
   <div class="card-header"><div [ngClass]="{'star': course.topRated}">{{ course.title | uppercase }}</div></div>
   <div class="card-body">
     <div class="card-title">
-      <div>{{ course.create_date | date:'mediumDate' }}</div>
+      <div>{{ course.create_date }}</div>
       <div>{{ course.duration | duration }}</div>
     </div>
     <div class="card-text">{{ course.description }}</div>
